@@ -6,3 +6,27 @@ CREATE TABLE users (
 INSERT INTO users (name) VALUES ('James');
 INSERT INTO users (name) VALUES ('Jamie');
 INSERT INTO users (name) VALUES ('Jimmy');
+
+DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS people;
+
+-- CREATE TABLE companies (
+--     id SERIAL PRIMARY KEY,
+--     name text NOT NULL,
+--     location text NOT NULL,
+-- );  
+
+-- CREATE TABLE people (
+--     id SERIAL PRIMARY KEY,
+--     first_name text NOT NULL,
+--     location text NOT NULL,
+--     company_id integer,
+--     CONSTRAINT fk_companies FOREIGN KEY(company_id) REFERENCES companies(id)
+-- )
+-- INSERT INTO companies (name, location) VALUES ('Microsoft', 'Washington');
+-- INSERT INTO companies (name, location) VALUES ('Apple', 'California');
+-- INSERT INTO companies (name, location) VALUES ('Google', 'California');
+
+-- INSERT INTO people (first_name, location, company_id, ) VALUES ('Micheal', 'Washington', 1);
+-- INSERT INTO people (first_name, location, company_id, ) VALUES ('Micky', 'California', 2);
+-- INSERT INTO people (first_name, location, company_id, ) VALUES ('Mitch', 'California', 3);

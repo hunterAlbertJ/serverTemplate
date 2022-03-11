@@ -1,7 +1,7 @@
-
+require("dotenv").config(); 
 const { Pool } =  require("pg");
 const pool = new Pool({
-    database: "people",
+    database: process.env.DATABASE_URL
 });
 
 function retrieve(res, index) {

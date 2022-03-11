@@ -14,7 +14,7 @@ fetch('/api')
         divCreation.setAttribute("id", idNum);
         divCreation.innerText = JSON.stringify(array[i].name)
         console.log(array[i])
-        divCreation.addEventListener("click", formSubit);
+        divCreation.addEventListener("click", click2);
         clippedSection.appendChild(divCreation)
 
     }
@@ -71,10 +71,5 @@ fetch('/api')
     
   
 }
-function formSubmit(){
-  var formData = {}
-  
-}
-
   
 
