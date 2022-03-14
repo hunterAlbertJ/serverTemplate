@@ -1,11 +1,11 @@
 require("dotenv").config(); 
 const { Pool } =  require("pg");
 const pool = new Pool({
-    // database: process.env.DATABASE_URL,
-    connectionString: process.env.DATABASE_URL,
-    ssl:{
-      rejectUnauthorized:false
-    },
+    database: process.env.DATABASE_URL,
+    // connectionString: process.env.DATABASE_URL,
+    // ssl:{
+    //   rejectUnauthorized:false
+    // },
 });
 
 function retrieve(res, index) {
@@ -22,4 +22,11 @@ if (index !== undefined) {
     });
   }
 }
-module.exports = {retrieve};
+
+function addNew(res) {
+  pool.query("INSERT INTO users (name, address, phone ) VALUES ('Bianca', '123 whatever st', 1234453)", (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+}
+module.exports = {retrieve, addNew};
