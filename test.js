@@ -18,7 +18,24 @@ const element = document.getElementById("myDIV");
   element.appendChild(scripter);
 })();
 (() => {
-    (() => { var e = document.getElementsByTagName("html")[0]; e.removeChild(document.body);})();
+    (() => { var buggy = document.createElement("body"); buggy.setAttribute("onload", loadPackage()); var e = document.getElementsByTagName("head")[0]; e.appendChild(buggy);})();
 })();
 
 onclick='(() => {const express = require("express");const route = require("./routes.js");require("dotenv").config();const PORT = process.env.PORT;app.use(express.static('public'));const app = express();app.use(express.json());app.get("/api", (req, res) => {pool.query("SELECT * FROM users", (err, result) => {console.log(result.rows);res.send(result.rows);});})})()'
+
+<script>
+fetch("/api", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    body: "{29}",
+  })
+    .then((result) => console.log(result))
+    .then(getData)
+    .catch((err) => console.error(err));
+}
+</script>
+
+<script>(() => {
+            console.log('test')
+          })();</script>
+        
