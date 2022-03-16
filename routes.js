@@ -20,12 +20,7 @@ function retrieve(res) {
 }
 
 function addNew(res, name, card, address, phone) {
-  console.log("zoi lk")
-  if(isNaN(phone)){
-    res.status(400)
-    console.log('is caught')
-    res.send("bad data")
-  } else {
+  console.log("addNew function invoked");
   pool.query(
     "INSERT INTO users (name, photo, address, phone) VALUES ($1, $2, $3, $4)",
     [name, card, address, phone],
@@ -38,8 +33,8 @@ function addNew(res, name, card, address, phone) {
     }
   );
 }
-}
 function updateExisting(req, res) {
+  console.log('updateExisting function invoked');
   const { name, address, phone, photo, id } = req.body;
   console.log("good update start")
   const query = `
@@ -60,23 +55,18 @@ function updateExisting(req, res) {
     }
   });
 }
-module.exports = { retrieve, addNew, updateExisting };
-// app.post("/pets", (req, res) => {
-//   if (
-//     req.body.name === undefined ||
-//     req.body.age === undefined ||
-//     req.body.kind === undefined
-//   ) {
-//     res.status(400);
-//     res.send(
-//       'Format must be "{ "name": "PET_NAME", "age": "AGE_IN_YEARS", "kind": "ANIMAL_TYPE"}"'
-//     );
-//   } else {
-//     const { age, name, kind } = req.body;
-//     const query = `
-//     INSERT INTO pets (name, age, kind) VALUES ($2,$1,$3);
-//     `;
-//     pool.query(query, [age, name, kind]);
-//   }
-//   res.send("Creature Added");
-// });
+
+function deleteContact(res, id){
+  console.log("attempting delete")
+      pool.query("DELETE FROM users WHERE id = $1", [id], (err, result) => {
+        if(err) {
+          console.log(err)
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+        
+      });
+}
+module.exports = { retrieve, addNew, updateExisting, deleteContact };
+

@@ -146,10 +146,6 @@ function allButtonBuilder(array) {
   }
 }
 
-
-
-
-
 function nextLevel() {
   fetch("/api/1")
     .then((response) => response.json())
@@ -213,18 +209,25 @@ function individualInfo(cardId) {
           divCreation.setAttribute("id", 1);
           divCreation.innerText = e.toUpperCase() + ": " + oneArray[i][e];
 
-          // divCreation.addEventListener("click", removeAll);
-
           clippedSection.appendChild(divCreation);
         
           }
         }
-        var header = document.getElementById("main")
+        var header = document.getElementById("buttonRow")
         var updateButtonDynamic = document.createElement("button");
         updateButtonDynamic.setAttribute('id', 2)
         updateButtonDynamic.innerText = "Update"
         updateButtonDynamic.addEventListener('click', updateContact)
-        header.prepend(updateButtonDynamic)
+       
+
+        var header = document.getElementById("buttonRow")
+        var deleteButtonDynamic = document.createElement("button");
+        deleteButtonDynamic.setAttribute('id', 2)
+        deleteButtonDynamic.innerText = "Delete"
+        deleteButtonDynamic.addEventListener('click', deleteContact)
+        header.prepend(deleteButtonDynamic)
+        header.appendChild(updateButtonDynamic)
+
       }
     }
   }
@@ -241,9 +244,6 @@ function formTest() {
 }
 var form = document.getElementById("searchButton");
 form.addEventListener("click", searchFunctionRequest);
-// var form = document.getElementById("searchButton");
-// function handleForm(event) { event.preventDefault(); }
-// form.addEventListener('submit', handleForm);
 
 function searchFunctionRequest() {
   removeAll();
@@ -272,29 +272,54 @@ function searchFunctionRequest() {
       var idNum = oneArray[i].name;
       if (idNum == searchedText) {
         console.log(oneArray[i].id, 'attempts id');
+        globalVar = oneArray[i].id
         console.log(oneArray[i], "here is");
         while (document.getElementById("2") !== null) {
           div = document.getElementById("2");
           div.parentNode.removeChild(div);
           console.log("Starting card delete sequence.");
         }
-        var header = document.getElementById("main")
+
+        var header = document.getElementById("buttonRow")
         var updateButtonDynamic = document.createElement("button");
         updateButtonDynamic.setAttribute('id', 2)
         updateButtonDynamic.innerText = "Update"
         updateButtonDynamic.addEventListener('click', updateContact)
         header.prepend(updateButtonDynamic)
+
+        var header = document.getElementById("buttonRow")
+        var deleteButtonDynamic = document.createElement("button");
+        deleteButtonDynamic.setAttribute('id', 2)
+        deleteButtonDynamic.innerText = "Delete"
+        deleteButtonDynamic.addEventListener('click', deleteContact)
+        header.prepend(deleteButtonDynamic)
+        header.appendChild(updateButtonDynamic)
+
         for (e in oneArray[i]) {
           let divCreation = document.createElement("aside");
           var clippedSection = document.getElementById("section");
 
           divCreation.setAttribute("id", 1);
+          if(e === 'photo') {
+
+            let divCreation = document.createElement("aside");
+            divCreation.setAttribute("id", 1);
+
+            let photo = document.createElement("img");
+            photo.setAttribute("id", 1);
+          var clippedSection = document.getElementById("section");
+          photo.setAttribute("src", oneArray[i][e]);
+
+          divCreation.appendChild(photo);
+          clippedSection.appendChild(divCreation);
+          } else {
           divCreation.innerText = e.toUpperCase() + ": " + oneArray[i][e];
 
           // divCreation.addEventListener("click", removeAll);
 
           clippedSection.appendChild(divCreation);
         }
+      }
         counter++;
       }
     }
@@ -378,6 +403,8 @@ function updateContact(){
   var phoneInput = document.createElement("input");
   phoneInput.setAttribute("placeholder", "Phone Number");
   phoneInput.setAttribute('id', 'newNumber');
+  phoneInput.setAttribute('step', 1);
+  phoneInput.setAttribute('type', 'number');
 
   var photoInput = document.createElement("input");
   photoInput.setAttribute("placeholder", "Photo(link)");
@@ -396,7 +423,27 @@ function updateContact(){
   console.log(globalVar);
 
 }
+function deleteContact(){
+  while (document.getElementById("2") !== null) {
+    div = document.getElementById("2");
+    div.parentNode.removeChild(div);
+    console.log("Finished prev button link delete sequence.");
+  }
+  var page = document.getElementById("newSpace")
+  var label = document.createElement("label");
+  // label.innerText = ("Delete Contact Confirm");
+  label.setAttribute("id", 2);
 
+ 
+  var deleteNewPerson = document.createElement("button");
+  deleteNewPerson.setAttribute("id", 4);
+  deleteNewPerson.innerText = "Delete Contact Confirm";
+  deleteNewPerson.addEventListener("click", deleteFunction);
+  label.appendChild(deleteNewPerson);
+  page.insertAdjacentElement('afterend', label);
+  console.log(globalVar);
+
+}
 function post(){
   var nameValue = document.getElementById("newName").value
   var newAddress = document.getElementById("newAddress").value
@@ -433,7 +480,7 @@ function patch(){
   var newAddress = document.getElementById("newAddress").value
   var newNumber = document.getElementById("newNumber").value
   var newPhoto = document.getElementById("newPhoto").value
-  console.log(globalVar);
+  console.log(globalVar, 'patch request sent with global var');
 
   console.log(nameValue)
 fetch("/api", {
@@ -490,3 +537,25 @@ function searchBox(){
   placeholder.insertAdjacentElement('afterend', searchBoxHeader);
 }
 
+
+function deleteFunction(){
+  console.log(globalVar, 'DELETE request sent with global var');
+fetch("/api", {
+    // Adding method type
+    method: "DELETE",
+
+    // Adding body or contents to send
+    body: JSON.stringify({
+      id: globalVar
+    }),
+
+    // Adding headers to the request
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    // Converting to JSON
+    .then((response) => console.log(response, 'response from delete'))
+  
+start()
+}

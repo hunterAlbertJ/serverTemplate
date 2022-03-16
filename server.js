@@ -24,9 +24,7 @@ app.post("/api", (req, res) => {
     console.log(req.body.address)
     
 })
-app.listen(PORT, () => {
-  console.log(`listing on port ${PORT}`);
-});
+
 
 app.patch("/api", (req, res) => {
   console.log(req.body);
@@ -46,12 +44,41 @@ app.patch("/api", (req, res) => {
   } 
   route.updateExisting(req, res);
 });
+
+app.delete("/api", (req, res) => {
+  console.log("attempting to send data to routes file")
+  route.deleteContact(res, req.body.id);
+});
 // console.log(faker.image.avatar())
 
-function fakeFriends(){
+// function fakeFriends(){
+
 //   const randomName = faker.name.findName(); // Rowan Nikolaus
 // const randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
 // const randomCard = faker.helpers.createCard(); // random contact card containing many properties
 // // console.log(faker);
+// req = {}
+// req.name = randomName
+// req.photo = faker.image.avatar()
+// req.address = faker.address.streetName();
+// req.phone = faker.phone.phoneNumber();
 
-}
+// // name, photo, address, phone
+
+
+// }
+
+// app.post("/api/1", (req, res) => {
+//   // route.addNew(res)
+//   // console.log('postin SON')
+//   // console.log(req.body.phone)
+//   for(var i = 0; i < 5; i++){
+//   route.addNew(res, faker.name.findName(), faker.image.avatar(), faker.address.streetAddress(), faker.phone.phoneNumber())
+//   // console.log(req.body.address)
+//   }
+  
+// });
+app.listen(PORT, () => {
+  console.log(`listing on port ${PORT}`);
+});
+// console.log(faker.name.findName(), faker.image.avatar(), faker.address.streetAddress(), faker.phone.phoneNumber());
