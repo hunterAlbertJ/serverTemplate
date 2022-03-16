@@ -16,6 +16,6 @@
     "pg": "^8.7.3"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-beta.0"
+    "@faker-js/faker": "github:faker-js/faker"
   }
 }
