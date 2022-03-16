@@ -18,7 +18,6 @@ function retrieve(res) {
     }
   });
 }
-
 function addNew(res, name, card, address, phone) {
   console.log("addNew function invoked");
   pool.query(
