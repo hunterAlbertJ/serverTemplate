@@ -15,7 +15,6 @@ app.get("/api/:index?", (req, res) => {
     console.log("using fetch")
     route.retrieve(res, req.params.index, req)
     
-
 })
 app.post("/api", (req, res) => {
     // route.addNew(res)
