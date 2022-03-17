@@ -68,16 +68,13 @@ app.delete("/api", (req, res) => {
 
 // }
 
-// app.post("/api/1", (req, res) => {
-//   // route.addNew(res)
-//   // console.log('postin SON')
-//   // console.log(req.body.phone)
-//   for(var i = 0; i < 5; i++){
-//   route.addNew(res, faker.name.findName(), faker.image.avatar(), faker.address.streetAddress(), faker.phone.phoneNumber())
-//   // console.log(req.body.address)
-//   }
+app.post("/api/1", (req, res) => {
+ 
+  route.addNew(res, faker.name.findName(), faker.image.avatar(), faker.address.streetAddress(), faker.phone.phoneNumber())
   
-// });
+  
+  
+});
 app.listen(PORT, () => {
   console.log(`listing on port ${PORT}`);
 });

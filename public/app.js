@@ -72,7 +72,6 @@ function removeAll() {
   }
   console.log("all cards deleted");
   individualInfo(classId);
-  // console.log('\n')
 }
 
 function specificChar() {
@@ -146,30 +145,30 @@ function allButtonBuilder(array) {
   }
 }
 
-function nextLevel() {
-  fetch("/api/1")
-    .then((response) => response.json())
-    .then((data) => levelOne(data));
+// function nextLevel() {
+//   fetch("/api/1")
+//     .then((response) => response.json())
+//     .then((data) => levelOne(data));
 
-  function levelOne(localArray) {
-    while (document.getElementById("1") !== null) {
-      div = document.getElementById("1");
-      div.parentNode.removeChild(div);
-      console.log("Starting card delete sequence.");
-    }
-    var clippedSection = document.getElementById("section");
-    console.log("Initiating page build.");
+//   function levelOne(localArray) {
+//     while (document.getElementById("1") !== null) {
+//       div = document.getElementById("1");
+//       div.parentNode.removeChild(div);
+//       console.log("Starting card delete sequence.");
+//     }
+//     var clippedSection = document.getElementById("section");
+//     console.log("Initiating page build.");
 
-    for (e in localArray) {
-      let divCreation = document.createElement("aside");
-      var clippedSection = document.getElementById("section");
+//     for (e in localArray) {
+//       let divCreation = document.createElement("aside");
+//       var clippedSection = document.getElementById("section");
 
-      divCreation.setAttribute("id", 1);
-      divCreation.innerText = e.toUpperCase() + ": " + localArray[e];
-      clippedSection.appendChild(divCreation);
-    }
-  }
-}
+//       divCreation.setAttribute("id", 1);
+//       divCreation.innerText = e.toUpperCase() + ": " + localArray[e];
+//       clippedSection.appendChild(divCreation);
+//     }
+//   }
+// }
 var globalVar = ''
 function individualInfo(cardId) {
   console.log(
@@ -202,7 +201,11 @@ function individualInfo(cardId) {
 
           divCreation.appendChild(photo);
           clippedSection.appendChild(divCreation);
+          } else if(e === 'id'){
+            console.log(e)
+
           } else {
+          
           let divCreation = document.createElement("aside");
           var clippedSection = document.getElementById("section");
 
@@ -210,7 +213,6 @@ function individualInfo(cardId) {
           divCreation.innerText = e.toUpperCase() + ": " + oneArray[i][e];
 
           clippedSection.appendChild(divCreation);
-        
           }
         }
         var header = document.getElementById("buttonRow")
@@ -218,13 +220,13 @@ function individualInfo(cardId) {
         updateButtonDynamic.setAttribute('id', 2)
         updateButtonDynamic.innerText = "Update"
         updateButtonDynamic.addEventListener('click', updateContact)
-       
 
         var header = document.getElementById("buttonRow")
         var deleteButtonDynamic = document.createElement("button");
         deleteButtonDynamic.setAttribute('id', 2)
         deleteButtonDynamic.innerText = "Delete"
         deleteButtonDynamic.addEventListener('click', deleteContact)
+
         header.prepend(deleteButtonDynamic)
         header.appendChild(updateButtonDynamic)
 
@@ -255,7 +257,6 @@ function searchFunctionRequest() {
     .then((data) => searchPull(data));
 
   function searchPull(oneArray) {
-    // console.log(oneArray[0].name);
     var counter = 0;
     var searchedText = document.getElementById("search").value;
     if (searchedText === "") {
@@ -266,8 +267,26 @@ function searchFunctionRequest() {
       clippedSection.appendChild(divCreation);
       counter++;
     }
-    
+    if(searchedText === "RANDOM"){
+      let divCreation = document.createElement("aside");
+      var clippedSection = document.getElementById("section");
+      divCreation.innerText = "A new friend appears!";
+      divCreation.setAttribute("id", 1);
+      clippedSection.appendChild(divCreation);
+      counter++;
 
+      fetch("/api/1", {
+        method: "POST",
+        body: JSON.stringify({
+          value: "RANDOM"
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => start());
+    }
     for (var i in oneArray) {
       var idNum = oneArray[i].name;
       if (idNum == searchedText) {
@@ -312,16 +331,16 @@ function searchFunctionRequest() {
 
           divCreation.appendChild(photo);
           clippedSection.appendChild(divCreation);
+          } else if(e === 'id'){
+            console.log(e)
+
           } else {
           divCreation.innerText = e.toUpperCase() + ": " + oneArray[i][e];
-
-          // divCreation.addEventListener("click", removeAll);
-
           clippedSection.appendChild(divCreation);
+          }
         }
       }
         counter++;
-      }
     }
     if (counter === 0) {
       let divCreation = document.createElement("aside");
@@ -332,7 +351,6 @@ function searchFunctionRequest() {
     }
   }
 }
-
 var allButton = document.getElementById("new");
 allButton.addEventListener("click", postin);
 function postin() {
@@ -343,10 +361,9 @@ function postin() {
   }
   var page = document.getElementById("newSpace")
   var label = document.createElement("label");
-  label.innerText = ("Add New Contact");
+  label.innerText = ("New Contact");
   label.setAttribute("id", 2);
 
-  // var newPersonSpace = document.createElement("section");
   var nameInput = document.createElement("input");
   nameInput.setAttribute("placeholder", "Name");
   nameInput.setAttribute('id', 'newName');
@@ -370,8 +387,6 @@ function postin() {
   label.appendChild(phoneInput);
   label.appendChild(photoInput);
   
-  
-
   var submitNewPerson = document.createElement("button");
   submitNewPerson.innerText = "Add Contact"
   submitNewPerson.addEventListener("click", post);
@@ -391,7 +406,6 @@ function updateContact(){
   label.innerText = ("Update Contact");
   label.setAttribute("id", 2);
 
-  // var newPersonSpace = document.createElement("section");
   var nameInput = document.createElement("input");
   nameInput.setAttribute("placeholder", "Name");
   nameInput.setAttribute('id', 'newName');
@@ -431,10 +445,8 @@ function deleteContact(){
   }
   var page = document.getElementById("newSpace")
   var label = document.createElement("label");
-  // label.innerText = ("Delete Contact Confirm");
   label.setAttribute("id", 2);
 
- 
   var deleteNewPerson = document.createElement("button");
   deleteNewPerson.setAttribute("id", 4);
   deleteNewPerson.innerText = "Delete Contact Confirm";
@@ -442,7 +454,6 @@ function deleteContact(){
   label.appendChild(deleteNewPerson);
   page.insertAdjacentElement('afterend', label);
   console.log(globalVar);
-
 }
 function post(){
   var nameValue = document.getElementById("newName").value
@@ -451,25 +462,17 @@ function post(){
   console.log(newNumber)
 
 fetch("/api", {
-    // Adding method type
     method: "POST",
-
-    // Adding body or contents to send
     body: JSON.stringify({
       name: nameValue,
       address: newAddress,
       phone: newNumber
     }),
-
-    // Adding headers to the request
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    // Converting to JSON
     .then((response) => response.json())
-
-    // Displaying results to console
     .then((json) => start());
 }
 
@@ -484,10 +487,7 @@ function patch(){
 
   console.log(nameValue)
 fetch("/api", {
-    // Adding method type
     method: "PATCH",
-
-    // Adding body or contents to send
     body: JSON.stringify({
       id: globalVar,
       name: nameValue,
@@ -495,16 +495,12 @@ fetch("/api", {
       phone: newNumber,
       photo: newPhoto
     }),
-
-    // Adding headers to the request
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    // Converting to JSON
-    .then((response) => console.log(response, 'response from patch'))
+    .then((response) => start())
   
-start()
 }
 function searchBox(){
   while (document.getElementById("2") !== null) {
@@ -537,25 +533,19 @@ function searchBox(){
   placeholder.insertAdjacentElement('afterend', searchBoxHeader);
 }
 
-
 function deleteFunction(){
   console.log(globalVar, 'DELETE request sent with global var');
 fetch("/api", {
-    // Adding method type
     method: "DELETE",
-
-    // Adding body or contents to send
     body: JSON.stringify({
       id: globalVar
     }),
-
-    // Adding headers to the request
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    // Converting to JSON
-    .then((response) => console.log(response, 'response from delete'))
+
+    .then((response) => start())
   
-start()
+
 }
