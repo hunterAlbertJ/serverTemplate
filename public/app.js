@@ -144,31 +144,6 @@ function allButtonBuilder(array) {
     clippedSection.appendChild(divCreation);
   }
 }
-
-// function nextLevel() {
-//   fetch("/api/1")
-//     .then((response) => response.json())
-//     .then((data) => levelOne(data));
-
-//   function levelOne(localArray) {
-//     while (document.getElementById("1") !== null) {
-//       div = document.getElementById("1");
-//       div.parentNode.removeChild(div);
-//       console.log("Starting card delete sequence.");
-//     }
-//     var clippedSection = document.getElementById("section");
-//     console.log("Initiating page build.");
-
-//     for (e in localArray) {
-//       let divCreation = document.createElement("aside");
-//       var clippedSection = document.getElementById("section");
-
-//       divCreation.setAttribute("id", 1);
-//       divCreation.innerText = e.toUpperCase() + ": " + localArray[e];
-//       clippedSection.appendChild(divCreation);
-//     }
-//   }
-// }
 var globalVar = ''
 function individualInfo(cardId) {
   console.log(
@@ -290,6 +265,7 @@ function searchFunctionRequest() {
     for (var i in oneArray) {
       var idNum = oneArray[i].name;
       if (idNum == searchedText) {
+        counter++
         console.log(oneArray[i].id, 'attempts id');
         globalVar = oneArray[i].id
         console.log(oneArray[i], "here is");
@@ -340,8 +316,9 @@ function searchFunctionRequest() {
           }
         }
       }
-        counter++;
+        
     }
+    console.log(counter, 'this is the count')
     if (counter === 0) {
       let divCreation = document.createElement("aside");
       var clippedSection = document.getElementById("section");
@@ -476,8 +453,6 @@ fetch("/api", {
     .then((json) => start());
 }
 
-  
-
 function patch(){
   var nameValue = document.getElementById("newName").value
   var newAddress = document.getElementById("newAddress").value
@@ -544,8 +519,5 @@ fetch("/api", {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-
     .then((response) => start())
-  
-
 }
