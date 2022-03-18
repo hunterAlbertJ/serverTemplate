@@ -54,7 +54,7 @@ function start() {
     console.log("\n");
   }
 }
-function gimmie() {
+function callAllButton() {
   removeAll();
   fetch("/api")
     .then((response) => response.json())
@@ -113,7 +113,7 @@ function specificChar() {
 }
 
 var allButton = document.getElementById("all");
-allButton.addEventListener("click", gimmie);
+allButton.addEventListener("click", callAllButton);
 
 function allButtonBuilder(array) {
   var clippedSection = document.getElementById("section");
@@ -216,16 +216,14 @@ pagelistener.addEventListener("keyup", function (event) {
     console.log("click");
   }
 });
-function formTest() {
-  console.log("good form test");
-}
+
 var form = document.getElementById("searchButton");
 form.addEventListener("click", searchFunctionRequest);
 
 function searchFunctionRequest() {
   removeAll();
 
-  console.log("from search: individual info function invoked on card ID:");
+  console.log("from search: individual info function invoked");
 
   fetch("/api")
     .then((response) => response.json())

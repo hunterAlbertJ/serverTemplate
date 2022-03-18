@@ -17,12 +17,9 @@ app.get("/api/:index?", (req, res) => {
     
 })
 app.post("/api", (req, res) => {
-    // route.addNew(res)
-    // console.log('postin SON')
     console.log(req.body.phone)
     route.addNew(res, req.body.name, faker.image.avatar(), req.body.address, req.body.phone);
-    console.log(req.body.address)
-    
+    console.log(req.body.address) 
 })
 
 
